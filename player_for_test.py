@@ -1,0 +1,17 @@
+
+x = 40
+y = 40
+width = 40
+height = 60
+speed = 7
+
+character_movement = pygame.key.get_pressed()
+if character_movement[pygame.K_LEFT] and x > 0:
+        x -= speed
+if character_movement[pygame.K_RIGHT] and x < width:
+        x += speed
+if character_movement[pygame.K_DOWN]:
+        y += speed
+if character_movement[pygame.K_UP]:
+        y -= speed  
+screen.fill((0,0,0)) #fill the background

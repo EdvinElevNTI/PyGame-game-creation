@@ -1,4 +1,3 @@
-#hjälper zion
 
 x = 40
 y = 40

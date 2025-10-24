@@ -1,24 +1,40 @@
 import pygame
 import sys
 
-# Initialize all imported pygame modules
+from player import player, player_movement
+
+# Initialize pygame
 pygame.init()
 
-# Create a window (width x height)
+# Create a window (width * height)
 screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("My Game")
+pygame.display.set_caption("Game")
+
+
+def add_player_at_location(x, y):
+    screen.blit(player, (x, y))
+
+
+x = 800 * 0.5
+y = 600 * 0.5
 
 # Main loop
-running = True
-while running:
+dead = False
+while not dead:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            dead = True
 
-    # Fill background (optional, just to clear screen)
+    
+    # Update player position
+    x, y = player_movement(x, y)
+
+    # Draw
     screen.fill((0, 0, 0))
-    pygame.display.flip()  # Update the display
+    add_player_at_location(x, y)
+    pygame.display.flip()
+    pygame.time.Clock().tick(60)  # 60 FPS
 
-# Clean up
+# Exit logic
 pygame.quit()
 sys.exit()

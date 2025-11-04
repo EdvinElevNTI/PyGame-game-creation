@@ -5,7 +5,7 @@ max_health = 100
 
 class Player:
     def __init__(self, x, y):
-        player_image = pygame.image.load('Pygame\player.png').convert_alpha()
+        player_image = pygame.image.load('player.png').convert_alpha()
         self.image = player_image
         self.rect = self.image.get_rect(center=(x, y))  # lagrar players position och storlek
         self.speed = speed

@@ -14,7 +14,7 @@ pygame.display.set_caption("Game")
 
 player = Player(400, 300)
 # Spawn the enemy
-enemy = Enemy(100, 200, "Pygame\enemytest.png")
+enemy = Enemy(100, 200, "enemytest.png")
 
 
 # Main loop

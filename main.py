@@ -27,10 +27,16 @@ while not dead:
     
     # Update player position
     player.move()
-    attack_rect = player.attack()  # Kan redigera sen efter att fixat enemies
+    attack_rect = player.attack()
+    
+    # To be able to attack the enemy and for it to take damage
+    if attack_rect and enemy.rect.colliderect(attack_rect) and not enemy.is_dead():
+        enemy.take_damage(10)
+        if enemy.is_dead():
+            enemy.alive = False
 
     # Update enemy location
-    enemy_x, enemy_y = enemy.enemy_movement(player.rect.x, player.rect.y)
+    enemy.enemy_movement(player.rect.x, player.rect.y)
 
     # Draw
     screen.fill((0, 0, 0))

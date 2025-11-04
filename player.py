@@ -1,7 +1,7 @@
 import pygame
 
-speed = 7
-max_health = 100
+speed = 7               # player moves with speed 7
+max_health = 100        # the total health is 100 (start)
 
 class Player:
     def __init__(self, x, y):
@@ -10,10 +10,11 @@ class Player:
         self.rect = self.image.get_rect(center=(x, y))  # lagrar players position och storlek
         self.speed = speed
         self.health = max_health
-        self.is_attacking = False   # True då attackerar
+        self.is_attacking = False   # True då attackerar, annars false
         self.attack_cooldown = 500  # tiden (millisekunder) mellan attackerna (så ej spamm)
         self.last_attack_time = 0   # lagrar senaste atacken (cooldown)
 
+    # Players movement
     def move(self):
         keys = pygame.key.get_pressed()
 
@@ -26,6 +27,7 @@ class Player:
         if keys[pygame.K_DOWN] and self.rect.y < 600 - self.rect.height:
             self.rect.y += self.speed
 
+    # Players attack
     def attack(self):
         keys = pygame.key.get_pressed()
         current_time = pygame.time.get_ticks()

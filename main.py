@@ -1,7 +1,8 @@
 import pygame
 import sys
 
-from player import player, player_movement
+from player import Player
+from enemy import Enemy
 
 # Initialize pygame
 pygame.init()
@@ -11,12 +12,10 @@ screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("Game")
 
 
-def add_player_at_location(x, y):
-    screen.blit(player, (x, y))
+player = Player(400, 300)
+# Spawn the enemy
+enemy = Enemy(100, 200, "Pygame\enemytest.png")
 
-
-x = 800 * 0.5
-y = 600 * 0.5
 
 # Main loop
 dead = False
@@ -27,11 +26,16 @@ while not dead:
 
     
     # Update player position
-    x, y = player_movement(x, y)
+    player.move()
+    attack_rect = player.attack()  # Kan redigera sen efter att fixat enemies
+
+    # Update enemy location
+    enemy_x, enemy_y = enemy.enemy_movement(player.rect.x, player.rect.y)
 
     # Draw
     screen.fill((0, 0, 0))
-    add_player_at_location(x, y)
+    player.draw(screen)
+    enemy.draw(screen)
     pygame.display.flip()
     pygame.time.Clock().tick(60)  # 60 FPS
 

@@ -15,7 +15,7 @@ pygame.display.set_caption("Game")
 player = Player(400, 300)
 # Spawn the enemy
 enemy = Enemy(100, 200, "Pygame\enemytest.png")
-enemy1 = Enemy(200, 200, "Pygame\enemytest.png")
+enemy1 = Enemy(200, 200, "Pygame\player.png")
 
 
 # Main loop
@@ -40,13 +40,19 @@ while not dead:
         if enemy.is_dead():
             enemy.alive = False 
 
+    # To to able attack and damage enemy1
+    if attack_rect and enemy1.rect.colliderect(attack_rect) and not enemy1.is_dead():
+        enemy1.take_damage(50)
+        if enemy1.is_dead():
+            enemy1.alive = False 
+
     # Draw
     screen.fill((0, 0, 0))
     player.draw(screen)
     enemy.draw(screen)
     enemy1.draw(screen)
     pygame.display.flip()
-    pygame.time.Clock().tick(60)  # 60 FPS
+    pygame.time.Clock().tick(60)  # 60 FPS 
 
 # Exit logic
 pygame.quit()

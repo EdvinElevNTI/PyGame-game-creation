@@ -35,7 +35,8 @@ class Enemy:
 
      # For the enemy to be able to die
     def is_dead(self):
-        return self.health <= 0
+        if self.health <= 0:
+            self.draw(100,100)
 
     
     def draw(self, screen):

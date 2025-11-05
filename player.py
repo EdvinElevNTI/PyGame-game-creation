@@ -1,11 +1,11 @@
 import pygame
 
-speed = 7
-max_health = 100
+speed = 5
+max_health = 250
 
 class Player:
     def __init__(self, x, y):
-        player_image = pygame.image.load('player.png').convert_alpha()
+        player_image = pygame.image.load("player.png").convert_alpha()
         self.image = player_image
         self.rect = self.image.get_rect(center=(x, y))  # lagrar players position och storlek
         self.speed = speed
@@ -13,6 +13,7 @@ class Player:
         self.is_attacking = False   # True då attackerar
         self.attack_cooldown = 500  # tiden (millisekunder) mellan attackerna (så ej spamm)
         self.last_attack_time = 0   # lagrar senaste atacken (cooldown)
+
 
     def move(self):
         keys = pygame.key.get_pressed()

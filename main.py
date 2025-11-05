@@ -14,8 +14,8 @@ pygame.display.set_caption("Game")
 
 player = Player(400, 300)
 # Spawn the enemy
-enemy = Enemy(100, 200, "Pygame\enemytest.png")
-enemy1 = Enemy(200, 200, "Pygame\player.png")
+enemy = Enemy(100, 200, "enemytest.png", 10)
+enemy1 = Enemy(200, 200, "player.png", 20)
 
 
 # Main loop
@@ -33,6 +33,12 @@ while not dead:
     # Update enemy location
     enemy_x, enemy_y = enemy.enemy_movement(player.rect.x, player.rect.y, 2)
     enemy_x, enemy_y = enemy1.enemy_movement(player.rect.x, player.rect.y, 1)
+
+    enemy.attack(player, pygame.time.get_ticks())
+    enemy1.attack(player, pygame.time.get_ticks())
+
+    if player.is_dead():
+        dead = True
 
     # To be able to attack the enemy and for it to take damage
     if attack_rect and enemy.rect.colliderect(attack_rect) and not enemy.is_dead():

@@ -1,24 +1,53 @@
 import pygame
 import sys
 
-# Initialize all imported pygame modules
+from player import Player
+from enemy import Enemy
+
+# Initialize pygame
 pygame.init()
 
-# Create a window (width x height)
+# Create a window (width * height)
 screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("My Game")
+pygame.display.set_caption("Game")
+
+
+player = Player(400, 300)
+# Spawn the enemy
+enemy = Enemy(100, 200, "Pygame\enemytest.png")
+enemy1 = Enemy(200, 200, "Pygame\enemytest.png")
+
 
 # Main loop
-running = True
-while running:
+dead = False
+while not dead:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            dead = True
 
-    # Fill background (optional, just to clear screen)
+    
+    # Update player position
+    player.move()
+    attack_rect = player.attack()  # Kan redigera sen efter att fixat enemies
+
+    # Update enemy location
+    enemy_x, enemy_y = enemy.enemy_movement(player.rect.x, player.rect.y, 2)
+    enemy_x, enemy_y = enemy1.enemy_movement(player.rect.x, player.rect.y, 1)
+
+    # To be able to attack the enemy and for it to take damage
+    if attack_rect and enemy.rect.colliderect(attack_rect) and not enemy.is_dead():
+        enemy.take_damage(10)
+        if enemy.is_dead():
+            enemy.alive = False 
+
+    # Draw
     screen.fill((0, 0, 0))
-    pygame.display.flip()  # Update the display
+    player.draw(screen)
+    enemy.draw(screen)
+    enemy1.draw(screen)
+    pygame.display.flip()
+    pygame.time.Clock().tick(60)  # 60 FPS
 
-# Clean up
+# Exit logic
 pygame.quit()
 sys.exit()

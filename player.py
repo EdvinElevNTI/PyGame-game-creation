@@ -36,7 +36,7 @@ class Player:
             self.last_attack_time = current_time
             
             # Return an attack hitbox
-            attack_rect = self.rect.inflate(40, 40)  # Attack range, förstorar områden runt playern (representerar hitboxen)
+            attack_rect = self.rect.inflate(300, 300)  # Attack range, förstorar områden runt playern (representerar hitboxen)
             return attack_rect
         else:
             self.is_attacking = False

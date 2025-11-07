@@ -33,6 +33,7 @@ class Enemy:
         elif self.y < y:
             self.y += self.speed
 
+        #For the hitbox of enemy
         self.rect.topleft = (self.x, self.y)
 
         return self.x, self.y

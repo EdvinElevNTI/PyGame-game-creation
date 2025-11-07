@@ -46,9 +46,6 @@ class Player:
         if self.health < 0:
             self.health = 0
 
-    def is_dead(self):      
-        return self.health <= 0     # When health is empty the player is dead
-
     def draw(self, screen):
         screen.blit(self.image, self.rect)
         pygame.draw.rect(screen, (255, 0, 0), (self.rect.x, self.rect.y - 10, self.rect.width, 5)) # RED healthbar for how much attacked

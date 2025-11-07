@@ -47,10 +47,6 @@ class Enemy:
             points += 10
             self.health = 0
             self.alive = False
-
-    # For the enemy to be able to die
-    def is_dead(self):
-        return self.health <= 0
     
     def draw(self, screen):
         # Draw the enemy

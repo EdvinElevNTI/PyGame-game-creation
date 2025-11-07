@@ -1,6 +1,5 @@
 import pygame
 import sys
-import time
 
 from player import Player
 import spawner
@@ -13,12 +12,14 @@ font = pygame.font.Font(None, 36)
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("Game")
 
+#create player 
 player = Player(400, 300)
 
 round_cooldown = 2000
 last_round_time = pygame.time.get_ticks()
 spawner.spawn_enemies()
 
+#load background
 bg = pygame.image.load("bg.png")
 
 # Game state, can be playing or choosing_upgrade
@@ -31,12 +32,12 @@ def game_over():
     # Stoppa spelet och visa Game Over-skärm
     while True:
         screen.fill((0, 0, 0))
-
+        # Display game over text
         title = font.render("GAME OVER", True, (255, 0, 0))
         score_text = font.render(f"Points: {enemy_module.points}", True, (255, 255, 255))
         round_text = font.render(f"Round: {spawner.round_num}", True, (255, 255, 255))
         restart_text = font.render("Press R to Restart or Q to Quit", True, (200, 200, 200))
-
+        #Draw text on screen
         screen.blit(title, (300, 200))
         screen.blit(score_text, (330, 280))
         screen.blit(round_text, (330, 320))
@@ -48,40 +49,45 @@ def game_over():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
+        #User inpur on game over screen 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_q]:
             pygame.quit()
             sys.exit()
         elif keys[pygame.K_r]:
             restart_game()
-            return  # lämnar game_over och fortsätter spelet igen
+            return  # lämnar game over och fortsätter spelet igen
         
+
+#function to restart game
 def restart_game():
     global player, spawner, enemy_module, game_state, last_round_time
 
-    # Återställ variabler
+    # restore variable to original value(score, round, enemies)
     enemy_module.points = 0
     spawner.round_num = 1
     spawner.current_enemies.clear()
 
-    player = Player(400, 300)  # ny spelare
+    #create new player and enemies
+    player = Player(400, 300)  # new player
     spawner.spawn_enemies()
-
+    #game state determines if to show game loop or upgrade menu
     game_state = "playing"
     last_round_time = pygame.time.get_ticks()
 
 
-
+#switch game state to choosing_upgrade
 def choose_upgrade():
     global game_state
     game_state = "choosing_upgrade"
 
+#upgrade menu screen
 def upgrade_menu(player):
     screen.fill((0, 0, 0))
     title = font.render("Choose an upgrade:", True, (255, 255, 255))
     screen.blit(title, (250, 200))
 
+    #show upgrade text 
     opt1 = font.render("1 - Increase movement speed (+1)", True, (0, 255, 0))
     opt2 = font.render("2 - Increase max health (+10) and + 50hp", True, (0, 255, 0))
     opt3 = font.render("3 - Increase attack damage (+10)", True, (0, 255, 0))
@@ -92,6 +98,7 @@ def upgrade_menu(player):
 
     pygame.display.flip()
 
+    #chose upgrade using 1,2,3 on keyboard
     keys = pygame.key.get_pressed()
     if keys[pygame.K_1]:
         player.speed += 1
@@ -115,10 +122,10 @@ while not dead:
             dead = True
 
 
-    # screen.fill(0,0,0)
+    # screen.fill(0,0,0), draw background
     screen.blit(bg, (0,0))
 
-    # game state - playing
+    # game state = playing, showing main loop
     if game_state == "playing":
         player.move()
         attack_rect = player.attack()
@@ -137,7 +144,7 @@ while not dead:
                 if enemy.rect.colliderect(attack_rect):
                     enemy.take_damage(player.attack_damage)
 
-        # Remove dead enemies
+        #Remove dead enemies
         spawner.remove_dead_enemies()
 
         # Draw enemies
@@ -151,7 +158,7 @@ while not dead:
         # Draw player
         player.draw(screen)
 
-    # playing state - upgrade
+    # playing state = upgrade, showing upgrade menu
     elif game_state == "choosing_upgrade":
         if upgrade_menu(player):
             spawner.next_round()
